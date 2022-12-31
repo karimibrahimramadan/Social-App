@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const authController = require("../../controllers/authController");
 const userController = require("../../controllers/userController");
-const { retrictTo } = require("../../middlewares/auth");
+const { retrictTo, protect } = require("../../middlewares/auth");
 
 router.post("/signup", authController.signup);
 
@@ -13,7 +13,7 @@ router.patch("/forgotpassword", authController.forgotPassword);
 
 router.patch("/resetpassword/:token", authController.resetPassword);
 
-router.use(retrictTo("user"));
+router.use(protect);
 
 router.patch("/me/updatepassword", authController.updatePassword);
 
