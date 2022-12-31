@@ -2,6 +2,7 @@ const router = require("express").Router();
 const authController = require("../../controllers/authController");
 const userController = require("../../controllers/userController");
 const { retrictTo, protect } = require("../../middlewares/auth");
+const { upload, fileValidation } = require("../../utils/multer");
 
 router.post("/signup", authController.signup);
 
@@ -29,6 +30,14 @@ router.delete(
   "/me/delete",
   userController.setParamsId,
   userController.deleteUser
+);
+
+router.patch(
+  "/me/profilepic",
+  upload("users/profile", fileValidation.image).single("image"),
+  userController.uploadProfilePic,
+  userController.setParamsId,
+  userController.updateUser
 );
 
 router.get("/:id", retrictTo("admin", "user"), userController.getUser);

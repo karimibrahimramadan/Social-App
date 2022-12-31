@@ -5,6 +5,7 @@ require("colors");
 const helmet = require("helmet");
 const routesController = require("./routes/routesController");
 const errorHandler = require("./controllers/errorController");
+const path = require("path");
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(cookieParser());
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+app.use("/api/v1/uploads", express.static(path.join(__dirname, "./uploads")));
 
 // routes
 app.use("/api/v1/posts", routesController.postRouter);
