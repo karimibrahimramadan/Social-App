@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 require("colors");
 const helmet = require("helmet");
 const routesController = require("./routes/routesController");
+const errorHandler = require("./controllers/errorController");
 
 const app = express();
 
@@ -18,5 +19,7 @@ if (process.env.NODE_ENV === "development") {
 // routes
 app.use("/api/v1/posts", routesController.postRouter);
 app.use("/api/v1/users", routesController.userRouter);
+
+app.use(errorHandler);
 
 module.exports = app;
