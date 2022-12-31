@@ -2,21 +2,47 @@ const router = require("express").Router();
 const authController = require("../../controllers/authController");
 const userController = require("../../controllers/userController");
 const { retrictTo, protect } = require("../../middlewares/auth");
+const validation = require("../../middlewares/validation");
+const validators = require("./userValidation");
 const { upload, fileValidation } = require("../../utils/multer");
 
-router.post("/signup", authController.signup);
+router.post(
+  "/signup",
+  validation(validators.signupValidation),
+  authController.signup
+);
 
-router.get("/verify-email/:token", authController.verifyEmail);
+router.get(
+  "/verify-email/:token",
+  validation(validators.verifyEmailValidation),
+  authController.verifyEmail
+);
 
-router.post("/login", authController.login);
+router.post(
+  "/login",
+  validation(validators.loginValidation),
+  authController.login
+);
 
-router.patch("/forgotpassword", authController.forgotPassword);
+router.patch(
+  "/forgotpassword",
+  validation(validators.forgotpasswordValidation),
+  authController.forgotPassword
+);
 
-router.patch("/resetpassword/:token", authController.resetPassword);
+router.patch(
+  "/resetpassword/:token",
+  validation(validators.resetpasswordValidation),
+  authController.resetPassword
+);
 
 router.use(protect);
 
-router.patch("/me/updatepassword", authController.updatePassword);
+router.patch(
+  "/me/updatepassword",
+  validation(validators.updatepasswordValidation),
+  authController.updatePassword
+);
 
 router.get("/me/profile", userController.setParamsId, userController.getUser);
 
@@ -40,14 +66,27 @@ router.patch(
   userController.updateUser
 );
 
-router.get("/:id", retrictTo("admin", "user"), userController.getUser);
+router.get(
+  "/:id",
+  retrictTo("admin", "user"),
+  validation(validators.paramsIdValidation),
+  userController.getUser
+);
 
 router.get("/", retrictTo("admin", "user"), userController.getAllUsers);
 
 router.use(retrictTo("admin"));
 
-router.patch("/:id", userController.updateUser);
+router.patch(
+  "/:id",
+  validation(validators.paramsIdValidation),
+  userController.updateUser
+);
 
-router.delete("/:id", userController.deleteUser);
+router.delete(
+  "/:id",
+  validation(validators.paramsIdValidation),
+  userController.deleteUser
+);
 
 module.exports = router;
