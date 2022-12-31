@@ -11,7 +11,7 @@ const protect = catchAsync(async (req, res, next) => {
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer ")
   ) {
-    token = req.headers.access_token.split(" ")[1];
+    token = req.headers.authorization.split(" ")[1];
   }
   if (!token) {
     return next(new AppError("You need to login first", 401));

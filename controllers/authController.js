@@ -71,11 +71,12 @@ const login = catchAsync(async (req, res, next) => {
 
 const forgotPassword = catchAsync(async (req, res, next) => {
   const { email } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select("+password");
   if (!user) {
     return next(new AppError("User with this email doesn't exist", 404));
   }
   const token = user.getPasswordResetToken();
+  await user.save();
   const url = `${req.protocol}://${req.get(
     "host"
   )}/api/v1/users/resetpassword/${token}`;
@@ -94,7 +95,7 @@ const resetPassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({
     passwordResetToken: hashedToken,
     passwordTokenExpire: { $gt: Date.now() },
-  });
+  }).select("+password");
   if (!user) {
     return next(new AppError("Token is invalid or has expired", 401));
   }
