@@ -8,6 +8,12 @@ const setCommentIds = (req, res, next) => {
   next();
 };
 
+const setFilterObj = (req, res, next) => {
+  res.locals.filterObj = req.params.postId ? { post: req.params.postId } : {};
+  console.log(res.locals.filterObj);
+  next();
+};
+
 const createComment = factory.createOne(Comment);
 
 const updateComment = factory.updateOne(Comment);
@@ -25,4 +31,5 @@ module.exports = {
   getAllComments,
   getComment,
   setCommentIds,
+  setFilterObj,
 };

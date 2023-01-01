@@ -73,6 +73,12 @@ router.get(
   userController.getUser
 );
 
+router.patch("/sendrequest/:id", userController.sendRequest);
+
+router.patch("/add/:id", userController.addFriend);
+
+router.patch("/follow/:id", userController.follow);
+
 router.get("/", retrictTo("admin", "user"), userController.getAllUsers);
 
 router.use(retrictTo("admin"));

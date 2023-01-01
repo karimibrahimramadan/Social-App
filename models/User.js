@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema(
     passwordResetToken: String,
     passwordChangedAt: Date,
     passwordTokenExpire: Date,
+    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    followings: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    friendsRequest: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

@@ -20,8 +20,9 @@ router.get(
 );
 
 router.get(
-  "/:postId?",
+  "/",
   validation(validators.getAllCommentsValidation),
+  commentController.setFilterObj,
   commentController.getAllComments
 );
 
