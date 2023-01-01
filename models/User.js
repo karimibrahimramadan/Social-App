@@ -30,12 +30,23 @@ const userSchema = new mongoose.Schema(
     passwordChangedAt: Date,
     passwordTokenExpire: Date,
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
 userSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt(parseInt(process.env.SALT_ROUNDS));
   this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+userSchema.virtual("posts", {
+  ref: "Post",
+  localField: "_id",
+  foreignField: "user",
+});
+
+userSchema.pre("findOne", function (next) {
+  this.populate("posts");
   next();
 });
 

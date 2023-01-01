@@ -50,7 +50,8 @@ const getOne = (Model) =>
 
 const getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    const apiFeatures = new APIFeatures(Model.find(), req.query)
+    let obj = res.locals.filterObj ? res.locals.filterObj : {};
+    const apiFeatures = new APIFeatures(Model.find(obj), req.query)
       .filter()
       .limitFields()
       .search()

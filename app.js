@@ -19,6 +19,7 @@ if (process.env.NODE_ENV === "development") {
 app.use("/api/v1/uploads", express.static(path.join(__dirname, "./uploads")));
 
 // routes
+app.use("/api/v1/comments", routesController.commentRouter);
 app.use("/api/v1/posts", routesController.postRouter);
 app.use("/api/v1/users", routesController.userRouter);
 
