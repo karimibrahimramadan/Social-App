@@ -12,7 +12,7 @@ const hpp = require("hpp");
 const xss = require("xss-clean");
 
 const app = express();
-const limiter = rateLimiter({
+const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   max: 100,
   legaceHeaders: false,
