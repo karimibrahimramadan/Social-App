@@ -10,9 +10,11 @@ router.use("/:postId/comments", commentRouter);
 
 router.use(protect);
 
+router.get("/feed", postController.feed);
+
 router.post(
   "/",
-  upload("posts", fileValidation.image).array("images", 10),
+  upload("posts", fileValidation.image).array("images", 20),
   validation(validators.createPostValidation),
   postController.uploadPostPics,
   postController.setUserId,
@@ -21,14 +23,18 @@ router.post(
 
 router.patch(
   "/:id",
-  //   upload("posts", fileValidation.image).fields(),
+  upload("posts", fileValidation.image).fields([
+    { name: "images", maxCount: 20 },
+    { name: "imagesArr", maxCount: 20 },
+  ]),
   validation(validators.updatePostValidation),
+  postController.uploadPostPicsUpdates,
   postController.updatePost
 );
 
 router.get(
   "/find/:id",
-  validation(validators.getPostValidation),
+  validation(validators.postIdValidation),
   postController.getPost
 );
 
@@ -41,8 +47,14 @@ router.get(
 
 router.delete(
   "/:id",
-  validation(validators.deletePostValidation),
+  validation(validators.postIdValidation),
   postController.deletePost
+);
+
+router.patch(
+  "/like/:id",
+  validation(validators.postIdValidation),
+  postController.likePost
 );
 
 module.exports = router;

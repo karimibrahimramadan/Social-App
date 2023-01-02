@@ -8,6 +8,8 @@ const signupValidation = {
       email: Joi.string().email().required(),
       password: Joi.string().required(),
       confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
+      gender: Joi.string().valid("Male", "Female").required(),
+      age: Joi.number().min(18).required(),
     }),
 };
 

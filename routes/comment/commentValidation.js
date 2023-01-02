@@ -27,24 +27,6 @@ const updateCommentValidation = {
     }),
 };
 
-const deleteCommentValidation = {
-  params: Joi.object()
-    .required()
-    .keys({
-      id: Joi.string().hex().length(24).required(),
-      postId: Joi.string().hex().length(24),
-    }),
-};
-
-const getCommentValidation = {
-  params: Joi.object()
-    .required()
-    .keys({
-      id: Joi.string().hex().length(24).required(),
-      postId: Joi.string().hex().length(24),
-    }),
-};
-
 const getAllCommentsValidation = {
   params: Joi.object()
     .required()
@@ -53,10 +35,18 @@ const getAllCommentsValidation = {
     }),
 };
 
+const commentIdValidation = {
+  params: Joi.object()
+    .required()
+    .keys({
+      id: Joi.string().hex().length(24).required(),
+      postId: Joi.string().hex().length(24),
+    }),
+};
+
 module.exports = {
   createCommentValidation,
   updateCommentValidation,
-  deleteCommentValidation,
-  getCommentValidation,
   getAllCommentsValidation,
+  commentIdValidation,
 };

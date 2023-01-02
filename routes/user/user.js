@@ -79,7 +79,7 @@ router.patch("/add/:id", userController.addFriend);
 
 router.patch("/follow/:id", userController.follow);
 
-router.get("/", retrictTo("admin", "user"), userController.getAllUsers);
+router.get("/", userController.getAllUsers);
 
 router.use(retrictTo("admin"));
 

@@ -33,6 +33,7 @@ const userSchema = new mongoose.Schema(
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     followings: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     friendsRequest: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    active: { type: Boolean, default: true, select: false },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

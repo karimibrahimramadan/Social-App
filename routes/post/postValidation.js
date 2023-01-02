@@ -17,15 +17,7 @@ const updatePostValidation = {
     }),
 };
 
-const deletePostValidation = {
-  params: Joi.object()
-    .required()
-    .keys({
-      id: Joi.string().hex().length(24).required(),
-    }),
-};
-
-const getPostValidation = {
+const postIdValidation = {
   params: Joi.object()
     .required()
     .keys({
@@ -44,7 +36,6 @@ const getAllPostsValidation = {
 module.exports = {
   createPostValidation,
   updatePostValidation,
-  deletePostValidation,
-  getPostValidation,
+  postIdValidation,
   getAllPostsValidation,
 };

@@ -9,6 +9,7 @@ const postSchema = new mongoose.Schema(
       ref: "User",
       required: [true, "Post must belong to a user"],
     },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

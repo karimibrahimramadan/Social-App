@@ -15,7 +15,7 @@ router.post(
 
 router.get(
   "/find/:id",
-  validation(validators.getCommentValidation),
+  validation(validators.commentIdValidation),
   commentController.getComment
 );
 
@@ -36,8 +36,14 @@ router.patch(
 
 router.delete(
   "/:id",
-  validation(validators.deleteCommentValidation),
+  validation(validators.commentIdValidation),
   commentController.deleteComment
+);
+
+router.patch(
+  "/like/:id",
+  validation(validators.commentIdValidation),
+  commentController.likeComment
 );
 
 module.exports = router;

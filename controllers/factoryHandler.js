@@ -82,10 +82,39 @@ const deleteOne = (Model) =>
     });
   });
 
+const likeOne = (Model) =>
+  catchAsync(async (req, res, next) => {
+    const doc = await Model.findById(req.params.id);
+    if (!doc) {
+      return next(new AppError("Document not found", 404));
+    }
+    let updatedDoc;
+    if (!doc.likes.includes(req.user.id)) {
+      updatedDoc = await Model.findByIdAndUpdate(
+        req.params.id,
+        { $addToSet: { likes: req.user.id } },
+        { new: true }
+      );
+    } else {
+      updatedDoc = await Model.findByIdAndUpdate(
+        req.params.id,
+        { $pull: { likes: req.user.id } },
+        { new: true }
+      );
+    }
+    res.status(200).json({
+      status: "Success",
+      data: {
+        data: updatedDoc,
+      },
+    });
+  });
+
 module.exports = {
   createOne,
   updateOne,
   getAll,
   getOne,
   deleteOne,
+  likeOne,
 };

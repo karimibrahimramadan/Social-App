@@ -1,6 +1,7 @@
 const factory = require("./factoryHandler");
 const Comment = require("../models/Comment");
 const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 
 const setCommentIds = (req, res, next) => {
   if (!req.body.post) req.body.post = req.params.postId;
@@ -24,6 +25,8 @@ const getAllComments = factory.getAll(Comment);
 
 const deleteComment = factory.deleteOne(Comment);
 
+const likeComment = factory.likeOne(Comment);
+
 module.exports = {
   createComment,
   updateComment,
@@ -32,4 +35,5 @@ module.exports = {
   getComment,
   setCommentIds,
   setFilterObj,
+  likeComment,
 };
