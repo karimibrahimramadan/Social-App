@@ -29,7 +29,7 @@ const upload = function (customPath, customValidation) {
     if (customValidation.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new AppError("Invalid file format", 400), false);
+      cb(new AppError("File format is not supported", 400), false);
     }
   };
   const uploads = multer({ dest: fullPath, fileFilter, storage });
